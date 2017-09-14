@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/maps.css' %}">
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: {lat: 17.767219, lng : 80.805918}
+      });
+    //   var markers=[]
+    //   var contentString=[]
+      var houselist = JSON.parse('{{ houselist|safe }}');
+      var lat1 = 17.767;
+      var lon1 = 80.805;
+      //   console.log(houselist);
+      var con=[];
+      for(i=0; i<houselist.length;i++){
+          var Lat = houselist[i].lat ;
+          var Lon = houselist[i].lon;
+          var Income = houselist[i].income ;
+          var DoorNo = houselist[i].doorNo ;
+          var contentString = '<div id="content">'+
+             '<div id="siteNotice">'+
+             '</div>'+
+           //   '<h1 id="firstHeading" class="firstHeading">House</h1>'+
+             '<div id="bodyContent">'+
+             '<p><h5>Latitude: '+Lat.toString()+'</h5></p>' +
+             '<p><h5>Longitude: '+Lon.toString()+'</h5></p>' +
+             '<p><h5>Income: '+Income.toString()+'</h5></p>' +
+             '<p><h5>DoorNo.: '+DoorNo.toString()+'</h5></p>' +
+             '</div>'+
+             '</div>';
+             con.push(contentString);
+      }
+
+      for (i=0;i<houselist.length;i++){
+          createMarker(i)
+      }
+      function createMarker(i){
+
+          console.log(houselist[i].lat);
+          var uluru = {lat: lat1, lng: lon1};
+          console.log(uluru)
+          infowindow = new google.maps.InfoWindow();
+
+
+          var marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+             icon:"/static/images/h.png",
+             title: 'Uluru (Ayers Rock)'
+          });
+          marker.addListener('click', function() {
+            infowindow.setContent(con[i]);
+            infowindow.open(map, marker);
+          });
+          lat1 = lat1+0.001;
+          lon1 = lon1+0.001;
+      }
+
+    }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6II9ywZ4ms1jyDIZ56mcFLsf8veQ-m2c&callback=initMap">
+    </script>
+
+{% endblock %}
+{% block content %}
+    <div id="map"></div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="card text-center">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a class="nav-link" id="gallery" href="{% url 'map:gallery' %}">Gallery</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link audio" href="{% url 'map:audio' %}">Audio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link video" href="{% url 'map:video' %}">Video</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-block">
+            {% block detail %}
+
+            {% endblock %}
+            <h4 class="card-title"></h4>
+            <p class="card-text"></p>
+            {# <a href="#" class="btn btn-primary"></a>#}
+          </div>
+          <br>
+        </div>
+    </div>
+{% endblock %}
