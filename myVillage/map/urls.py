@@ -5,7 +5,7 @@ from . import views
 app_name = 'map'
 
 urlpatterns = [
-    url(r'^gallery/', views.Gallery.as_view(), name='gallery'),
+    url(r'^gallery/', views.gallery, name='gallery'),
     url(r'^audio/', views.audio, name='audio'),
     url(r'^video/', views.video, name='video'),
     url(r'^households/', views.HouseList, name='households'),

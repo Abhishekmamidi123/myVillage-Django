@@ -1,27 +1,19 @@
-@font-face {
-  font-family: 'Glyphicons Halflings';
+body {
+    /*background-color: #FF5733;*/
+    /*background-color: white;*/
+    background: url("images/background.png");
+}
+/*#f4ce42;*/
+.backColor>li>a:hover{
+    color: white !important;
+    background-color: #056303 !important;
+}
 
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+.omg{
+    background-color: #b6c9d8 !important;
+    color: white;
 }
-.glyphicon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.glyphicon-asterisk:before {
-  content: "\002a";
-}
-.glyphicon-plus:before {
-  content: "\e005";
-}
-.glyphicon-user:before {
-    content: "\e008";
+.colour{
+    background-color:#b6c9d8 ;
 }

@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+<head>
+<link rel="stylesheet" href="{% static 'css/glyphicons.css'%}">
+
+</head>
 {% block content %}
     <br>
     <div class="container">
@@ -16,7 +21,7 @@
               </li>
             </ul>
           </div>
-          <div class="card-block">
+          <div class="card-block colour">
             {% block detail %}
 
             {% endblock %}
@@ -25,6 +30,6 @@
             {# <a href="#" class="btn btn-primary"></a>#}
           </div>
           <br>
-        </div>
+      </div>
     </div>
 {% endblock %}
