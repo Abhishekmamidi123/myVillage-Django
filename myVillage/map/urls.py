@@ -5,7 +5,7 @@ from . import views
 app_name = 'map'
 
 urlpatterns = [
-    url(r'^gallery/', views.gallery, name='gallery'),
+    url(r'^gallery/(?P<pk>[0-9]+)/$', views.gallery, name='gallery'),
     url(r'^audio/', views.audio, name='audio'),
     url(r'^video/', views.video, name='video'),
     url(r'^households/', views.HouseList, name='households'),
@@ -13,3 +13,4 @@ urlpatterns = [
     url(r'^farms/', views.FarmsList, name='farms'),
     url(r'^overview/', views.OverViewList, name='overall'),
 ]
+# (?P<pk>\d+)

@@ -5,6 +5,7 @@
 {% endblock %}
 {% block script %}
     <script type="text/javascript">
+
     function initMap() {
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 17,
@@ -15,60 +16,76 @@
       var farmlist = JSON.parse('{{ farmlist|safe }}');
       var pointlist = JSON.parse('{{ pointlist|safe }}');
       var uluru = {lat: 17.7653, lng: 80.8057};
-      var lat1 = 0;
-      var lon1 = 0;
-      //   console.log(houselist);
+	 var p={{latlon}}
+
+   var j=0;
+         //console.log(farmlist);
       var con=[];
       for(i=0; i<farmlist.length;i++){
 
           var Area = farmlist[i].area ;
-          //var DoorNo = farmlist[i].doorNo ;
+          var HouseNo = farmlist[i].house ;
           var contentString = '<div id="content">'+
              '<div id="siteNotice">'+
              '</div>'+
            //   '<h1 id="firstHeading" class="firstHeading">House</h1>'+
              '<div id="bodyContent">'+
              '<p><h5>Area:'+Area.toString()+'</h5></p>' +
+
+             '<p><h5>House No:'+HouseNo.toString()+'</h5></p>' +
              '</div>'+
              '</div>';
              con.push(contentString);
+	var li=[];
+var o=0;
+for (k=j;k<j+8;k++){
+
+li[o]=p[k];
+o=o+1;
+}
+createMarker(i,li);
+j=j+8;
       }
 
-      for (i=0;i<farmlist.length;i++){
-          createMarker(i)
-      }
-      function createMarker(i){
+
+      function createMarker(i,li){
 
           //console.log(houselist[i].lat);
           //var uluru = {lat: lat1, lng: lon1};
           //console.log(uluru)
 		 var triangleCoords = [
-             {lat:17.765861+lat1,lng:80.805861+lon1},
-	         {lat:17.765841+lat1,lng:80.805268+lon1},
-	         {lat:17.765335+lat1,lng:80.805257+lon1},
-	         {lat:17.765386+lat1,lng:80.805796+lon1}
-         ];
+          {lat:li[1],lng:li[0]},
+{lat:li[3],lng:li[2]},
+{lat:li[5],lng:li[4]},
+{lat:li[7],lng:li[6]}
 
-         uluru={lat:17.765386+lat1,lng:80.805796+lon1};
-         var bermudaTriangle = new google.maps.Polygon({
+        ];
+
+uluru={lat:li[7],lng:li[6]};
+var bermudaTriangle = new google.maps.Polygon({
           paths: triangleCoords,
           strokeColor: 'green',
           strokeOpacity: 0.8,
           strokeWeight: 3,
           fillColor: 'green',
           fillOpacity: 0.5,
-	     position: uluru
+	  position: uluru
         });
 
-        infowindow = new google.maps.InfoWindow();
-		      bermudaTriangle.setMap(map);
-	          google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
-			  infowindow.setContent(con[i]);
- 		      infowindow.open(map,bermudaTriangle);
-        });
-          lat1 = lat1+0.001;
-          lon1 = lon1+0.001;
+
+
+          infowindow = new google.maps.InfoWindow();
+
+
+		     bermudaTriangle.setMap(map);
+	google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
+			infowindow.setContent(con[i]);
+ 		 infowindow.open(map,bermudaTriangle);
+
+});
+
       }
+
     }
     </script>
     <script async defer

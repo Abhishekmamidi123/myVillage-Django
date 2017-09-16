@@ -11,18 +11,22 @@
         zoom: 16,
         center: {lat: 17.767219, lng : 80.805918}
       });
+	var p={{latlon}}
+	var j=0;
     //   var markers=[]
     //   var contentString=[]
-      var houselist = JSON.parse('{{ houselist|safe }}');
+      var welllist = JSON.parse('{{ welllist|safe }}');
       var lat1 = 17.767;
       var lon1 = 80.805;
-      //   console.log(houselist);
+         console.log(welllist);
       var con=[];
-      for(i=0; i<houselist.length;i++){
-          var Lat = houselist[i].lat ;
-          var Lon = houselist[i].lon;
-          var Income = houselist[i].income ;
-          var DoorNo = houselist[i].doorNo ;
+      for(i=0; i<welllist.length;i++){
+          var Lat = welllist[i].lat ;
+          var Lon = welllist[i].lon;
+          var Depth = welllist[i].depth ;
+          var Wateryield = welllist[i].averageWaterYield ;
+
+          var farmno = welllist[i].farm ;
           var contentString = '<div id="content">'+
              '<div id="siteNotice">'+
              '</div>'+
@@ -30,20 +34,25 @@
              '<div id="bodyContent">'+
              '<p><h5>Latitude: '+Lat.toString()+'</h5></p>' +
              '<p><h5>Longitude: '+Lon.toString()+'</h5></p>' +
-             '<p><h5>Income: '+Income.toString()+'</h5></p>' +
-             '<p><h5>DoorNo.: '+DoorNo.toString()+'</h5></p>' +
+             '<p><h5>Depth: '+Depth.toString()+'</h5></p>' +
+             '<p><h5>Avg Wateryield: '+Wateryield.toString()+'</h5></p>' +
+
+             '<p><h5>Farm No: '+farmno.toString()+'</h5></p>' +
              '</div>'+
              '</div>';
              con.push(contentString);
-      }
-      for (i=0;i<houselist.length;i++){
-          createMarker(i)
-      }
-      function createMarker(i){
+	Lat1=p[j+1]
+        Lon1=p[j]
 
-          console.log(houselist[i].lat);
-          var uluru = {lat: lat1, lng: lon1};
-          console.log(uluru)
+	createMarker(i,Lat1,Lon1);
+	j=j+2;
+      }
+
+      function createMarker(i,Lat1,Lon1){
+
+          //console.log(welllist[i].lat);
+          var uluru = {lat: Lat1, lng: Lon1};
+          //console.log(uluru)
           infowindow = new google.maps.InfoWindow();
 
 
@@ -57,9 +66,7 @@
             infowindow.setContent(con[i]);
             infowindow.open(map, marker);
           });
-          lat1 = lat1+0.001;
-          lon1 = lon1+0.001;
-      }
+          }
     }
     </script>
     <script async defer
