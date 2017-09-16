@@ -11,15 +11,13 @@
         zoom: 17,
         center: {lat: 17.767219, lng : 80.805918}
       });
-    //   var markers=[]
-    //   var contentString=[]
+
       var farmlist = JSON.parse('{{ farmlist|safe }}');
       var pointlist = JSON.parse('{{ pointlist|safe }}');
       var uluru = {lat: 17.7653, lng: 80.8057};
 	  var p={{latlon}}
 
       var j=0;
-         //console.log(farmlist);
       var con=[];
       for(i=0; i<farmlist.length;i++){
 
@@ -31,7 +29,6 @@
            //   '<h1 id="firstHeading" class="firstHeading">House</h1>'+
              '<div id="bodyContent">'+
              '<p><h5>Area:'+Area.toString()+'</h5></p>' +
-
              '<p><h5>House No:'+HouseNo.toString()+'</h5></p>' +
              '</div>'+
              '</div>';
@@ -46,45 +43,35 @@
       j=j+8;
       }
 
-
       function createMarker(i,li){
-
           //console.log(houselist[i].lat);
           //var uluru = {lat: lat1, lng: lon1};
           //console.log(uluru)
 		 var triangleCoords = [
-          {lat:li[1],lng:li[0]},
-{lat:li[3],lng:li[2]},
-{lat:li[5],lng:li[4]},
-{lat:li[7],lng:li[6]}
-
+          {lat:li[0],lng:li[1]},
+          {lat:li[2],lng:li[3]},
+          {lat:li[4],lng:li[5]},
+          {lat:li[6],lng:li[7]}
         ];
-
-uluru={lat:li[7],lng:li[6]};
-var bermudaTriangle = new google.maps.Polygon({
+        var Lat = (li[0]+li[2]+li[4]+li[6])/4;
+        var Lon = (li[1]+li[3]+li[5]+li[7])/4;
+        uluru={lat:Lat,lng:Lon};
+        var bermudaTriangle = new google.maps.Polygon({
           paths: triangleCoords,
           strokeColor: 'green',
           strokeOpacity: 0.8,
           strokeWeight: 3,
           fillColor: 'green',
           fillOpacity: 0.5,
-	  position: uluru
+	      position: uluru
         });
-
-
-
-          infowindow = new google.maps.InfoWindow();
-
-
+             infowindow = new google.maps.InfoWindow();
 		     bermudaTriangle.setMap(map);
-	google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
-			infowindow.setContent(con[i]);
- 		 infowindow.open(map,bermudaTriangle);
-
-});
-
+	         google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
+			 infowindow.setContent(con[i]);
+ 		     infowindow.open(map,bermudaTriangle);
+         });
       }
-
     }
     </script>
     <script async defer

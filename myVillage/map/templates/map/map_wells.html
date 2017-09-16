@@ -36,17 +36,16 @@
              '<p><h5>Longitude: '+Lon.toString()+'</h5></p>' +
              '<p><h5>Depth: '+Depth.toString()+'</h5></p>' +
              '<p><h5>Avg Wateryield: '+Wateryield.toString()+'</h5></p>' +
-
              '<p><h5>Farm No: '+farmno.toString()+'</h5></p>' +
              '</div>'+
              '</div>';
              con.push(contentString);
-	Lat1=p[j]
-    Lon1=p[j+1]
+	         Lat1=p[j]
+             Lon1=p[j+1]
 
-	createMarker(i,Lat1,Lon1);
-	j=j+2;
-      }
+	         createMarker(i,Lat1,Lon1);
+	         j=j+2;
+            }
 
       function createMarker(i,Lat1,Lon1){
 

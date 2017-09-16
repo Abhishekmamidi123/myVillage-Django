@@ -4,69 +4,173 @@
     <link rel="stylesheet" href="{% static 'css/maps.css' %}">
 {% endblock %}
 {% block script %}
+
     <script type="text/javascript">
 
     function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
+      var map = new google.maps.Map(document.getElementById('map'),{
+        zoom: 18,
         center: {lat: 17.767219, lng : 80.805918}
       });
-    //   var markers=[]
-    //   var contentString=[]
-      var houselist = JSON.parse('{{ houselist|safe }}');
-      var lat1 = 17.767;
-      var lon1 = 80.805;
-      //   console.log(houselist);
+      infowindow = new google.maps.InfoWindow();
+    var li=[];
+   var p={{latlon}}
+   var j=0;
+    var houselist=JSON.parse('{{ houselist|safe }}')
       var con=[];
       for(i=0; i<houselist.length;i++){
           var Lat = houselist[i].lat ;
           var Lon = houselist[i].lon;
           var Income = houselist[i].income ;
           var DoorNo = houselist[i].doorNo ;
-          var contentString = '<div id="content">'+
+          var v = p[j+2];
+
+          var x=1;
+          var contentString1 = '<div id="content">'+
+             '<div id="siteNotice">'+
+             '</div>'+
+             '<div id="bodyContent">'+
+             '<p><h5>Latitude: '+Lon.toString()+'</h5></p>' +
+             '<p><h5>Longitude: '+Lat.toString()+'</h5></p>' +
+             '<p><h5>Income: '+Income.toString()+'</h5></p>' +
+             '<p><h5>DoorNo.: '+DoorNo.toString()+'</h5></p>' +
+             '<p><h5>Details: <a href="{% url 'map:gallery' pk=3 %}" >Details</a></h5></p>' +
+             '</div>' +
+             '</div>';
+             con.push(contentString1);
+
+	  Lat1=p[j]
+      Lon1=p[j+1]
+
+	  createMarker(i,Lat1,Lon1,1,li, con);
+	     j=j+3;
+      }
+
+      function createMarker(i,Lat,Lon,flag,li, con){
+       if (flag==1){
+           var uluru = {lat: Lat, lng: Lon };
+              //console.log(uluru)
+              var marker = new google.maps.Marker({
+                position: uluru,
+                map: map,
+                 icon:"/static/images/h.png",
+                 title: 'Uluru (Ayers Rock)'
+              });
+              marker.addListener('click', function() {
+                infowindow.setContent(con[i]);
+                infowindow.open(map, marker);
+            });
+        }
+        else if (flag==2) {
+            var uluru1 = {lat: Lat1, lng: Lon1};
+            //console.log(uluru)
+            // infowindow = new google.maps.InfoWindow();
+            var marker = new google.maps.Marker({
+              position: uluru1,
+              map: map,
+               icon:"/static/images/well.png",
+               title: 'Uluru (Ayers Rock)'
+            });
+              marker.addListener('click', function() {
+              infowindow.setContent(con[i]);
+              infowindow.open(map, marker);
+            });
+        }
+        else if (flag==3){
+            var triangleCoords = [
+              {lat:li[0],lng:li[1]},
+              {lat:li[2],lng:li[3]},
+              {lat:li[4],lng:li[5]},
+              {lat:li[6],lng:li[7]}
+            ];
+            var AvgLat = (li[0]+li[2]+li[4]+li[6])/4;
+            var AvgLon = (li[1]+li[3]+li[5]+li[7])/4;
+            uluru={lat:AvgLat, lng:AvgLon};
+            var bermudaTriangle = new google.maps.Polygon({
+              paths: triangleCoords,
+              strokeColor: 'green',
+              strokeOpacity: 0.8,
+              strokeWeight: 3,
+              fillColor: 'green',
+              fillOpacity: 0.5,
+              position: uluru
+            });
+            bermudaTriangle.setMap(map);
+            google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
+            infowindow.setContent(con[i]);
+            infowindow.open(map,bermudaTriangle);
+            });
+        }
+      }
+
+	  var p={{latlon2}}
+	  var j=0;
+      var welllist = JSON.parse('{{ welllist|safe }}');
+      var lat1 = 17.767;
+      var lon1 = 80.805;
+         console.log(welllist);
+      var con=[];
+      for(i=0; i<welllist.length;i++){
+          var Lat = welllist[i].lat ;
+          var Lon = welllist[i].lon;
+          var Depth = welllist[i].depth ;
+          var Wateryield = welllist[i].averageWaterYield ;
+
+          var farmno = welllist[i].farm ;
+          var contentString2 = '<div id="content">'+
              '<div id="siteNotice">'+
              '</div>'+
            //   '<h1 id="firstHeading" class="firstHeading">House</h1>'+
              '<div id="bodyContent">'+
              '<p><h5>Latitude: '+Lat.toString()+'</h5></p>' +
              '<p><h5>Longitude: '+Lon.toString()+'</h5></p>' +
-             '<p><h5>Income: '+Income.toString()+'</h5></p>' +
-             '<p><h5>DoorNo.: '+DoorNo.toString()+'</h5></p>' +
+             '<p><h5>Depth: '+Depth.toString()+'</h5></p>' +
+             '<p><h5>Avg Wateryield: '+Wateryield.toString()+'</h5></p>' +
+             '<p><h5>Farm No: '+farmno.toString()+'</h5></p>' +
              '</div>'+
              '</div>';
-             con.push(contentString);
+             con.push(contentString2);
+	         Lat1=p[j]
+             Lon1=p[j+1]
+	         createMarker(i,Lat1,Lon1,2, li, con);
+	         j=j+2;
+        }
+     var farmlist = JSON.parse('{{ farmlist|safe }}');
+      var pointlist = JSON.parse('{{ pointlist|safe }}');
+      var uluru = {lat: 17.7653, lng: 80.8057};
+	  var p={{latlon3}}
+
+      var j=0;
+      var con=[];
+      for(i=0; i<farmlist.length;i++){
+          var Area = farmlist[i].area ;
+          var HouseNo = farmlist[i].house ;
+          var contentString3 = '<div id="content">'+
+             '<div id="siteNotice">'+
+             '</div>'+
+           //   '<h1 id="firstHeading" class="firstHeading">House</h1>'+
+             '<div id="bodyContent">'+
+             '<p><h5>Area:'+Area.toString()+'</h5></p>' +
+             '<p><h5>House No:'+HouseNo.toString()+'</h5></p>' +
+             '</div>'+
+             '</div>';
+             con.push(contentString3);
+             var li=[];
+             var o=0;
+             for (k=j;k<j+8;k++){
+                li[o]=p[k];
+                o=o+1;
+              }
+              createMarker(i,17.767219,80.805918,3,li, con);
+              j=j+8;
       }
-
-      for (i=0;i<houselist.length;i++){
-          createMarker(i)
-      }
-      function createMarker(i){
-
-          console.log(houselist[i].lat);
-          var uluru = {lat: lat1, lng: lon1};
-          console.log(uluru)
-          infowindow = new google.maps.InfoWindow();
-
-
-          var marker = new google.maps.Marker({
-            position: uluru,
-            map: map,
-             icon:"/static/images/h.png",
-             title: 'Uluru (Ayers Rock)'
-          });
-          marker.addListener('click', function() {
-            infowindow.setContent(con[i]);
-            infowindow.open(map, marker);
-          });
-          lat1 = lat1+0.001;
-          lon1 = lon1+0.001;
-      }
-
     }
+///
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6II9ywZ4ms1jyDIZ56mcFLsf8veQ-m2c&callback=initMap">
     </script>
+
 
 {% endblock %}
 {% block content %}

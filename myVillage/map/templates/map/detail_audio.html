@@ -1,5 +1,30 @@
 {% extends "map/detail_base.html" %}
 {% block detail %}
     <br>
-    <h1>Audio</h1>
+    <h1>Audio</h1><br>
+    <div class="container">
+    <div class="row border">
+    <br>
+    {% for i in audiolist %}
+        <br>
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <div class="card card-danger omg">
+                <audio controls="controls">
+                    <source src={{ i }} type="audio/mpeg">
+                    Your browser does not support the HTML5 audio element.
+                </audio>
+              {# <img class="card-img-top" src="{% static 'images/farmer2.jpeg' %}" alt="Card image cap">#}
+              <div class="card-block">
+                <!--h4 class="card-title">Name</h4>
+                <p class="card-title">Gender</p>
+                <p class="card-title">Age</p-->
+                <!--p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p-->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12"></div>
+    {% endfor %}
+    </div>
+    </div>
 {% endblock %}

@@ -13,4 +13,3 @@ urlpatterns = [
     url(r'^farms/', views.FarmsList, name='farms'),
     url(r'^overview/', views.OverViewList, name='overall'),
 ]
-# (?P<pk>\d+)
