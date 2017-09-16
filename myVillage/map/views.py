@@ -9,19 +9,27 @@ import json
 import urllib2
 
 def gallery(request, pk):
-    return render(request, "map/detail_gallery.html", {'loop_times':range(1, 4), 'pk':pk})
+    url="http://10.0.3.23:1111/housePhoto"
+    json_obj=urllib2.urlopen(url)
+    photolist = json.load(json_obj)
+    photolist1=[]
+    for obj in photolist:
+        if obj['house'] == int(pk):
+            photolist1.append('http://10.0.3.23:1111'+obj['photo'].encode('ascii', 'ignore'))
+    # photolist1 = [obj['photo'].encode('ascii', 'ignore') for obj in photolist if(obj['house'] == int(pk))]
+    return render(request, "map/detail_gallery.html", {'loop_times':range(0, len(photolist1)), 'pk':pk, 'photolist1':photolist1 })
 
-def audio(request):
-    return render(request, "map/detail_audio.html", None)
+def audio(request, pk):
+    return render(request, "map/detail_audio.html", {'pk': pk})
 
-def video(request):
-    return render(request, "map/detail_video.html", None)
+def video(request, pk):
+    return render(request, "map/detail_video.html", {'pk':pk})
 
 # def map(request):
 #     return render(request, 'map/maps.html', None)
 
 def HouseList(request):
-    url="http://restserver123.pythonanywhere.com/house/"
+    url="http://10.0.3.23:1111/house/"
     json_obj=urllib2.urlopen(url)
     houselist=json.load(json_obj)
     latlon=[]
@@ -29,8 +37,8 @@ def HouseList(request):
     for i in houselist:
     	latlon.append(i['lat'])
     	latlon.append(i['lon'])
-        latlon.append(i['id'])
-        idList.append(i['id'])
+        latlon.append(int(i['id']))
+        idList.append(int(i['id']))
     context={'houselist':json.dumps(houselist),'latlon':latlon,'idList':idList}
     return render(request,'map/maps.html',context)
 

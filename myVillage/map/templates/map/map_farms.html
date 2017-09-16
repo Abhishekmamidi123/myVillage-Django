@@ -16,9 +16,9 @@
       var farmlist = JSON.parse('{{ farmlist|safe }}');
       var pointlist = JSON.parse('{{ pointlist|safe }}');
       var uluru = {lat: 17.7653, lng: 80.8057};
-	 var p={{latlon}}
+	  var p={{latlon}}
 
-   var j=0;
+      var j=0;
          //console.log(farmlist);
       var con=[];
       for(i=0; i<farmlist.length;i++){
@@ -36,15 +36,14 @@
              '</div>'+
              '</div>';
              con.push(contentString);
-	var li=[];
-var o=0;
-for (k=j;k<j+8;k++){
-
-li[o]=p[k];
-o=o+1;
-}
-createMarker(i,li);
-j=j+8;
+	 var li=[];
+     var o=0;
+     for (k=j;k<j+8;k++){
+        li[o]=p[k];
+        o=o+1;
+      }
+      createMarker(i,li);
+      j=j+8;
       }
 
 

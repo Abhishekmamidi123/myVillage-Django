@@ -14,10 +14,10 @@
                 <a class="nav-link" id="gallery" href="{% url 'map:gallery' pk=pk %}">Gallery</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link audio" href="{% url 'map:audio' %}">Audio</a>
+                <a class="nav-link audio" href="{% url 'map:audio' pk=pk %}">Audio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link video" href="{% url 'map:video' %}">Video</a>
+                <a class="nav-link video" href="{% url 'map:video' pk=pk %}">Video</a>
               </li>
             </ul>
           </div>
