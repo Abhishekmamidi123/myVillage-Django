@@ -14,14 +14,12 @@
       });
 
 
-   var p={{latlon}}
+   var p = {{latlon}}
    var idList={{idList}}
    var j=0;
     var houselist=JSON.parse('{{ houselist|safe }}')
       var con=[];
       for(i=0; i<houselist.length;i++){
-          console.log(idList);
-          var v=idList[i];
 
         //   console.log(typeof(idList[i]==typeof(7)));
           var id = idList[i];
@@ -30,7 +28,8 @@
           var Income = houselist[i].income ;
           var DoorNo = houselist[i].doorNo ;
           var v = p[j+2];
-
+          console.log(v);
+          console.log(typeof(v));
           var x=1;
           console.log(typeof(x));
           console.log(typeof(9));
@@ -42,14 +41,14 @@
              '<p><h5>Longitude: '+Lat.toString()+'</h5></p>' +
              '<p><h5>Income: '+Income.toString()+'</h5></p>' +
              '<p><h5>DoorNo.: '+DoorNo.toString()+'</h5></p>' +
-             '<p><h5>Details: <a href="{% url 'map:gallery' pk=3 %}" >Details</a></h5></p>' +
+             '<p><h5>ID: '+v.toString()+'</h5></p>' +
+             '<p><h5>Details: <a href="../../map/gallery/'+v.toString()+'/" >Details</a></h5></p>' +
              '</div>' +
              '</div>';
              con.push(contentString);
 
 	  Lat1=p[j]
       Lon1=p[j+1]
-
 	  createMarker(i,Lat1,Lon1);
 	  j=j+3;
       }
