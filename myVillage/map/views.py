@@ -7,6 +7,7 @@ from django.views.generic import TemplateView, ListView
 from . import models
 import json
 import urllib2
+import datetime
 
 def gallery(request, pk):
     url="http://10.0.3.23:1111/housePhoto"
@@ -107,7 +108,60 @@ def OverViewList(request):
     context={'houselist':json.dumps(houselist),'latlon':latlon1, 'welllist':json.dumps(welllist),'latlon2':l2, "farmlist":json.dumps(farmlist),'pointlist':json.dumps(pointlist),'latlon3':l3}
     return render(request,'map/map_overview.html',context)
 
-# class HouseList(ListView):
-#     model = models.house
-#     template_name = "map/maps.html"
-#     context_object_name = "houselist"
+def WellVisualize(request):
+	url1="http://10.0.3.23:1111/wells/"
+    json_obj1=urllib2.urlopen(url1)
+    wellsList=json.load(json_obj1)
+
+    url2="http://10.0.3.23:1111/dateTime/"
+    json_obj2=urllib2.urlopen(url2)
+    dateTimeList=json.load(json_obj2)
+	
+    context = {'wellslist':wellslist, 'dateTimeList':dateTimeList}
+    return render(request,'#',context)
+    
+def WellHistory(request, pk):
+	url1="http://10.0.3.23:1111/dateTime/pk"
+    json_obj1=urllib2.urlopen(url1)
+    wellsList=json.load(json_obj1)
+    recentHistoryList=[]
+	cnt=0
+	for i in wellsList[::-1]:
+		if cnt==7:
+			break
+		else:
+			recentHistoryList.append(i)
+			cnt+=1
+	context = {'farmList':farmList, 'cropList':cropList}
+    return render(request,'#',context)
+
+def FarmVisualize(request):
+	url1="http://10.0.3.23:1111/farm/"
+    json_obj1=urllib2.urlopen(url1)
+    farmList=json.load(json_obj1)
+
+    url2="http://10.0.3.23:1111/cropping/"
+    json_obj2=urllib2.urlopen(url2)
+    croppingList=json.load(json_obj2)
+	
+	now=datetime.datetime.now()
+	year = now.year
+	month = now.month
+	
+	if month>=7 and month<10:
+		season_id = 1 # kharif
+	else if month>=10 and month<3:
+		season_id = 2 # rabi
+	else:
+		season_id = 3 # summer
+	
+	cropList=[]
+	for i in croppingList:
+		if i['season'] == season_id and i['year'] == str(year):
+			cropList.append(i)
+	
+	context = {'farmList':farmList, 'cropList':cropList}
+    return render(request,'#',context)
+
+def 
+ 
