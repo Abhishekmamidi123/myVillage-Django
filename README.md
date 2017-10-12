@@ -1,5 +1,10 @@
 # myVillage-Django
-A django project
+A project targeting farmers for their better visualization of their farms, wells, houses and others.
+
+# Highlights of the project
+1. Responsive
+2. Interactive
+3. Scalable
 
 # How to run this project?
 1. Download the zip file from the link and extract.
