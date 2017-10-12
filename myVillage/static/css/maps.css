@@ -6,4 +6,14 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+
+}
+#chartdiv{
+	height: 500px;
+	width: 100%;
+}
+#a{
+	height: 500px;
+	width: 100%;
+
 }
