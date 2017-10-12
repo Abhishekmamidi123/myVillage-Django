@@ -4,7 +4,40 @@
     <link rel="stylesheet" href="{% static 'css/maps.css' %}">
 {% endblock %}
 {% block script %}
+<script>"https://www.google.com/jsapi?.js"</script>
+<script>"https://maps.googleapis.com/maps/api/js?v=3.10&sensor=false&.js"</script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
+     google.load("visualization", "1", {packages:["corechart"]});
+    function drawChart(marker) {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+              ['Mushrooms', 3000],
+              ['Onions', 1000],
+              // ['Olives', 1],
+              // ['Zucchini', 1],
+              // ['Pepperoni', 2]
+            ]);
+
+            // Set chart options
+            var options = {'title':'Pizza sold @ '+
+                                   marker.position.toString(),
+                           'width':400,
+                           'height':150};
+
+            var node        = document.createElement('div'),
+                infoWindow  = new google.maps.InfoWindow(),
+                chart       = new google.visualization.PieChart(node);
+
+                chart.draw(data, options);
+                infoWindow.setContent(node);
+
+                infoWindow.open(marker.map,marker);
+          }
 
     function initMap() {
       var map = new google.maps.Map(document.getElementById('map'), {
@@ -16,13 +49,17 @@
       var pointlist = JSON.parse('{{ pointlist|safe }}');
       var uluru = {lat: 17.7653, lng: 80.8057};
 	  var p={{latlon}}
-
+    var dic={{dic}}
+    console.log(p);
       var j=0;
       var con=[];
-      for(i=0; i<farmlist.length;i++){
 
+      for(i=0; i<farmlist.length;i++){
+        flag=0;
           var Area = farmlist[i].area ;
           var HouseNo = farmlist[i].house ;
+          var v=farmlist[i].id;
+          var year = 2017;
           var contentString = '<div id="content">'+
              '<div id="siteNotice">'+
              '</div>'+
@@ -30,23 +67,52 @@
              '<div id="bodyContent">'+
              '<p><h5>Area:'+Area.toString()+'</h5></p>' +
              '<p><h5>House No:'+HouseNo.toString()+'</h5></p>' +
+             '<p><h5>Details: <a href="../../map/farmHistoryYear/'+v.toString()+'/" >Details</a></h5></p>' +
              '</div>'+
              '</div>';
              con.push(contentString);
 	 var li=[];
      var o=0;
-     for (k=j;k<j+8;k++){
-        li[o]=p[k];
-        o=o+1;
-      }
-      createMarker(i,li);
-      j=j+8;
-      }
+     for (k=0;k<p.length;k++)
+     {
+      //  console.log(p[k]);
+       if(p[k]==v)
+       {
+        li[0]=p[k-8]
+        li[1]=p[k-7]
+        li[2]=p[k-6]
+        li[3]=p[k-5]
+        li[4]=p[k-4]
+        li[5]=p[k-3]
+        li[6]=p[k-2]
+        li[7]=p[k-1]
+        console.log(li);
 
-      function createMarker(i,li){
+        var Area = farmlist[i].area ;
+          var HouseNo = farmlist[i].house ;
+          var v=farmlist[i].id;
+        var contentString = '<div id="content">'+
+             '<div id="siteNotice">'+
+             '</div>'+
+           //   '<h1 id="firstHeading" class="firstHeading">House</h1>'+
+             '<div id="bodyContent">'+
+             '<p><h5>Area:'+Area.toString()+'</h5></p>' +
+             '<p><h5>House No:'+HouseNo.toString()+'</h5></p>' +
+             '<p><h5>Details: <a href="../../map/farmHistoryYear/'+v.toString()+'/" >Details</a></h5></p>' +
+             '</div>'+
+             '</div>';
+        createMarker(i,li,v,contentString);
+
+        break
+       }
+     }
+
+
+      }
+      function createMarker(i,li,v,contentString){
           //console.log(houselist[i].lat);
           //var uluru = {lat: lat1, lng: lon1};
-          //console.log(uluru)
+          console.log(v)
 		 var triangleCoords = [
           {lat:li[0],lng:li[1]},
           {lat:li[2],lng:li[3]},
@@ -65,12 +131,97 @@
           fillOpacity: 0.5,
 	      position: uluru
         });
+
+
              infowindow = new google.maps.InfoWindow();
-		     bermudaTriangle.setMap(map);
-	         google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
-			 infowindow.setContent(con[i]);
- 		     infowindow.open(map,bermudaTriangle);
+             bermudaTriangle.setMap(map);
+		       google.maps.event.addListener(bermudaTriangle, 'mouseover', function (event) {
+
+        //drawChart(this);
+
+        var big=[];
+        j=0
+        for( i=0;i<dic[v-1].length;i=i+2)
+        {
+          big[j]=[]
+          if (dic[v-1][i]==1)
+          {
+          big[j][0]="Paddy"
+        }
+        if (dic[v-1][i]==2)
+        {
+        big[j][0]="Corn"
+        }
+        if (dic[v-1][i]==3)
+        {
+        big[j][0]="Wheat"
+        }
+        if (dic[v-1][i]==4)
+        {
+        big[j][0]="Jute"
+        }
+
+        if (dic[v-1][i]==5)
+        {
+        big[j][0]="Tomato"
+        }
+        if (dic[v-1][i]==6)
+        {
+        big[j][0]="Onion"
+        }
+        if (dic[v-1][i]==7)
+        {
+        big[j][0]="Cotton"
+        }
+
+          big[j][1]=dic[v-1][i+1]
+          j=j+1
+        }
+
+
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows(big);
+
+
+
+
+        // Set chart options
+        var options = {'title':'Crops cultivated in the current season',
+                       'width':400,
+                       'height':150};
+                       var text = document.createElement('div');
+                       var content=document.createTextNode("Hi");
+                       text.appendChild(content);
+        var node        = document.createElement('div');
+
+            infoWindow  = new google.maps.InfoWindow(),
+            chart       = new google.visualization.PieChart(node);
+            chart.draw(data, options);
+
+            infoWindow.setContent(node);
+
+            infoWindow.open(bermudaTriangle.map,bermudaTriangle);
+
+
          });
+        //  google.maps.event.addListener(bermudaTriangle, 'mouseout', function (event) {
+        //    infoWindow.close();
+        //  });
+
+         google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
+		         infoWindow.close();
+             infoWindow  = new google.maps.InfoWindow(),
+           infoWindow.setContent(contentString);
+           infoWindow.open(bermudaTriangle.map,bermudaTriangle);
+
+
+
+});
+
+
       }
     }
     </script>

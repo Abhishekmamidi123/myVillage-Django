@@ -2,82 +2,180 @@
 {% load staticfiles %}
 {% block link %}
     <link rel="stylesheet" href="{% static 'css/maps.css' %}">
+
 {% endblock %}
 {% block script %}
 
-    <script type="text/javascript">
-
-    function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'),{
-        zoom: 18,
-        center: {lat: 17.767219, lng : 80.805918}
-      });
+<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
 
-   var p = {{latlon}}
-   var idList={{idList}}
-   var j=0;
-    var houselist=JSON.parse('{{ houselist|safe }}')
-      var con=[];
-      for(i=0; i<houselist.length;i++){
+<script>
 
-        //   console.log(typeof(idList[i]==typeof(7)));
-          var id = idList[i];
-          var Lat = houselist[i].lat ;
-          var Lon = houselist[i].lon;
-          var Income = houselist[i].income ;
-          var DoorNo = houselist[i].doorNo ;
-          var v = p[j+2];
-          console.log(v);
-          console.log(typeof(v));
-          var x=1;
-          console.log(typeof(x));
-          console.log(typeof(9));
-          var contentString = '<div id="content">'+
-             '<div id="siteNotice">'+
-             '</div>'+
-             '<div id="bodyContent">'+
-             '<p><h5>Latitude: '+Lon.toString()+'</h5></p>' +
-             '<p><h5>Longitude: '+Lat.toString()+'</h5></p>' +
-             '<p><h5>Income: '+Income.toString()+'</h5></p>' +
-             '<p><h5>DoorNo.: '+DoorNo.toString()+'</h5></p>' +
-             '<p><h5>ID: '+v.toString()+'</h5></p>' +
-             '<p><h5>Details: <a href="../../map/gallery/'+v.toString()+'/" >Details</a></h5></p>' +
-             '</div>' +
-             '</div>';
-             con.push(contentString);
+var latlong={};
+var latlon = {{latlon}}
+var idList={{idList}}
+var members={{members}}
+var income = {{income}}
+var houselist=JSON.parse('{{ houselist|safe }}')
 
-	  Lat1=p[j]
-      Lon1=p[j+1]
-	  createMarker(i,Lat1,Lon1);
-	  j=j+3;
-      }
+j=0;
+for (i=0;i<idList.length;i++){
+if (i%2==0){
+  latlong[i]={"latitude":latlon[j]+(i*0.2),"longitude":latlon[j+1]+(i*0.5)}
+  j=j+3;}
+else{
+  latlong[i]={"latitude":latlon[j]+(i*0.1),"longitude":latlon[j+1]+(i*0.3)}
+  j=j+3;}
+}
 
-      function createMarker(i,Lat,Lon){
-       var uluru = {lat: Lat, lng: Lon };
-          //console.log(uluru)
-          infowindow = new google.maps.InfoWindow();
+var mapData=[]
+for (i=0;i<idList.length;i++){
+  if(income[i]<100000){
+    mapData[i]={"code":i,"name":"House ID:"+idList[i].toString()+"\n"+"Family Size:"+members[i].toString(),"value":members[i],"color":"#eea638"}
+  }
+  if(income[i]>=100000 && income[i]<200000){
+    mapData[i]={"code":i,"name":"House ID:"+idList[i].toString()+"\n"+"Family Size:"+members[i].toString(),"value":members[i],"color":"#de4c4f"}
+  }
+  if(income[i]>=200000 && income[i]<300000){
+    mapData[i]={"code":i,"name":"House ID:"+idList[i].toString()+"\n"+"Family Size:"+members[i].toString(),"value":members[i],"color":"black"}
+  }
+  if(income[i]>=300000){
+    mapData[i]={"code":i,"name":"House ID:"+idList[i].toString()+"\n"+"Family Size:"+members[i].toString(),"value":members[i],"color":"blue"}
+  }
+}
+// get min and max values
+var minBulletSize = 3;
+var maxBulletSize = 70;
+var min = Infinity;
+var max = -Infinity;
+for ( var i = 0; i < mapData.length; i++ ) {
+  var value = mapData[ i ].value;
+  if ( value < min ) {
+    min = value;
+  }
+  if ( value > max ) {
+    max = value;
+  }
+}
+
+// it's better to use circle square to show difference between values, not a radius
+var maxSquare = maxBulletSize * maxBulletSize * 2 * Math.PI;
+var minSquare = minBulletSize * minBulletSize * 2 * Math.PI;
+
+// create circle for each country
+var image = [];
+for ( var i = 0; i < mapData.length; i++ ) {
+  var dataItem = mapData[ i ];
+  var value = dataItem.value;
+  // calculate size of a bubble
+  var square = ( value - min ) / ( max - min ) * ( maxSquare - minSquare ) + minSquare;
+  if ( square < minSquare ) {
+    square = minSquare;
+  }
+  var size = Math.sqrt( square / ( Math.PI * 2 ) );
+  var id = dataItem.code;
+
+  image.push( {
+    "type": "circle",
+"theme": "light",
+
+    "width": size,
+    "height": size,
+    "color": dataItem.color,
+    "longitude": latlong[ id ].longitude,
+    "latitude": latlong[ id ].latitude,
+    "title": dataItem.name,
+    "value": value
+  } );
+}
+
+// build map
+var map = AmCharts.makeChart( "chartdiv", {
+  "type": "map",
+  "projection": "eckert6",
+  "titles": [ {
+    "text": "Visualisation of location of houses marked by the markers of sizes proprtional to the corresponding family size.",
+    "size": 14
+  }, {
+    "text": "",
+    "size": 11
+  } ],
+  "areasSettings": {
+    //"unlistedAreasColor": "#000000",
+    //"unlistedAreasAlpha": 0.1
+  },
+  "dataProvider": {
+    "map": "worldLow",
+"zoomLevel":85.5,
+"zoomLongitude": 12.80,
+ "zoomLatitude": 32.72,
+//"latitude":17.727056,
+//"longitude":80.805960,
+    "images": image
+  },
+  "export": {
+    "enabled": true
+  }
+} );
+</script>
+
+<script>
+
+dataPoints= []
+var members = {{members}}
+var income = {{income}}
+var idList = {{idList}}
+for(i=0; i<members.length;i++){
+  dataPoints[i]= { x: members[i], y: income[i],z:idList[i] }
+}
+
+window.onload = function () {
 
 
-          var marker = new google.maps.Marker({
-            position: uluru,
-            map: map,
-             icon:"/static/images/h.png",
-             title: 'Uluru (Ayers Rock)'
-          });
-          marker.addListener('click', function() {
-            infowindow.setContent(con[i]);
-            infowindow.open(map, marker);
-          });
-      }
 
-    }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6II9ywZ4ms1jyDIZ56mcFLsf8veQ-m2c&callback=initMap">
-    </script>
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+
+	zoomEnabled: true,
+	title:{
+		text: "Family Size Vs Income Plot"
+	},
+	axisX: {
+		title:"Family Size",
+		minimum: 1,
+		maximum: 10
+	},
+	axisY:{
+		title: "Income (in Rupees)",
+    minimum: 70000,
+		maximum: 350000
+	},
+	data: [{
+		type: "scatter",
+		toolTipContent: "<b>Family Size: </b>{x}<br/><b>Income: </b>{y}<br><b>House ID: </b>{z}",
+    markerSize:15,
+    dataPoints:dataPoints
+
+	}]
+});
+chart.render();
+
+}
+</script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
 
 {% endblock %}
+
 {% block content %}
-    <div id="map"></div>
+<div id="chartdiv"></div>
+<p><b>Radius</b>&nbsp-indicates the family size of house </p>
+<p><b>Color</b>&nbsp-indicates the income of house </p>
+
+<div id="chartContainer" style="height: 500px; width: 100%;"></div>
 {% endblock %}

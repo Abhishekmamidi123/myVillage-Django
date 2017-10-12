@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/maps.css' %}">
+{% endblock %}
+
+<style>
+#chartdiv {
+    width        : 100%;
+    height        : 500px;
+    font-size    : 11px;
+}
+
+#container, #sliders {
+    min-width: 310px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+#container {
+    height: 400px;
+}
+</style>
+
+<!-- Resources -->
+
+{% block script %}
+<script>"https://www.google.com/jsapi?.js"</script>
+<script>"https://maps.googleapis.com/maps/api/js?v=3.10&sensor=false&.js"</script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<!-- Chart code -->
+<script>
+
+var recent = {{recentHistoryList}}
+var pk={{pk}}
+console.log(recent);
+console.log(pk);
+// Set up the chart
+var chart = new Highcharts.Chart({
+    chart: {
+        renderTo: 'container',
+        type: 'column',
+        options3d: {
+            enabled: true,
+            alpha: 15,
+            beta: 15,
+            depth: 50,
+            viewDistance: 25
+        }
+    },
+    title: {
+        text: 'Chart rotation demo'
+    },
+    subtitle: {
+        text: 'Test options by dragging the sliders below'
+    },
+    plotOptions: {
+        column: {
+            depth: 25
+        }
+    },
+    series: [{
+        data: [recent[0],recent[1]]
+    }]
+});
+
+function showValues() {
+    $('#alpha-value').html(chart.options.chart.options3d.alpha);
+    $('#beta-value').html(chart.options.chart.options3d.beta);
+    $('#depth-value').html(chart.options.chart.options3d.depth);
+}
+
+// Activate the sliders
+$('#sliders input').on('input change', function () {
+    chart.options.chart.options3d[this.id] = parseFloat(this.value);
+    showValues();
+    chart.redraw(false);
+});
+
+showValues();
+
+
+</script>
+
+{% endblock %}
+{% block content %}
+
+
+<div id="container"></div>
+<div id="sliders">
+    <table>
+        <tr>
+          <td>Alpha Angle</td>
+          <td><input id="alpha" type="range" min="0" max="45" value="15"/> <span id="alpha-value" class="value"></span></td>
+        </tr>
+        <tr>
+          <td>Beta Angle</td>
+          <td><input id="beta" type="range" min="-45" max="45" value="15"/> <span id="beta-value" class="value"></span></td>
+        </tr>
+        <tr>
+          <td>Depth</td>
+          <td><input id="depth" type="range" min="20" max="100" value="50"
+{% endblock %}

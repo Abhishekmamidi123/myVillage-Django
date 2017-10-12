@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/maps.css' %}">
+{% endblock %}
+{% block script %}
+
+<style>
+#chartdiv {
+	width		: 100%;
+	height		: 500px;
+	font-size	: 11px;
+}
+#table{
+
+}
+#circle1 {
+      width: 30px;
+      height: 30px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 20px;
+      background: #99ccff;
+    }
+    #circle2 {
+      width: 30px;
+      height: 30px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 20px;
+      background: #ffff66;
+    }
+    #circle3 {
+      width: 30px;
+      height: 30px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 20px;
+      background: #a6ff4d;
+    }
+
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+<!-- Chart code -->
+<script>
+
+var flag={{flag}};
+
+if (flag == 0){
+document.getElementById('chartdiv').innerHTML = "<h1>No Data for this year...</h1>";
+document.getElementById('table').innerHTML = "<h1> </h1>";
+}
+else{
+
+var farmList = {{farmList}};
+var dic=[];
+for (i=0;i<3;i++){
+  dic[i]=[];
+}
+var total=0;
+for (i=0;i<farmList.length;i++){
+if(farmList[i][2]==1){
+
+    total = total +farmList[i][0]
+}
+}
+console.log(farmList);
+console.log(total);
+
+for (i=0;i<farmList.length;i++){
+
+  if (farmList[i][2]==1){
+
+    if(farmList[i][1]==1)
+      dic[0][0] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==2)
+        dic[0][1] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==3)
+        dic[0][2] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==4)
+        dic[0][3] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==5)
+        dic[0][4] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==6)
+        dic[0][5] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==7)
+        dic[0][6] = (farmList[i][0]/total)*100
+
+  }
+  else if (farmList[i][2]==2) {
+    if(farmList[i][1]==1)
+      dic[1][0] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==2)
+        dic[1][1] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==3)
+        dic[1][2] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==4)
+        dic[1][3] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==5)
+        dic[1][4] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==6)
+        dic[1][5] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==7)
+        dic[1][6] = (farmList[i][0]/total)*101
+  }
+  else {
+    if(farmList[i][1]==1)
+      dic[2][0] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==2)
+        dic[2][1] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==3)
+        dic[2][2] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==4)
+        dic[2][3] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==5)
+        dic[2][4] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==6)
+        dic[2][5] = (farmList[i][0]/total)*100
+    else if (farmList[i][1]==7)
+        dic[2][6] = (farmList[i][0]/total)*100
+  }
+}
+console.log(dic);
+
+
+
+var chart = AmCharts.makeChart("chartdiv", {
+    "theme": "light",
+    "type": "serial",
+    "dataProvider": [{
+        "crop": "Paddy",
+        "kharif": dic[0][0],
+        "rabi": dic[1][0],
+        "summer": dic[2][0],
+    }, {
+        "crop": "Corn",
+        "kharif":dic [0][1],
+        "rabi": dic[1][1],
+        "summer": dic[2][1],
+    }, {
+        "crop": "Wheat",
+        "kharif":dic [0][2],
+        "rabi": dic[1][2],
+        "summer": dic[2][2],
+    }, {
+        "crop": "Jute",
+        "kharif":dic [0][3],
+        "rabi": dic[1][3],
+        "summer": dic[2][3],
+    }, {
+        "crop": "Tomato",
+        "kharif":dic [0][4],
+        "rabi": dic[1][4],
+        "summer": dic[2][4],
+    }, {
+        "crop": "Onion",
+        "kharif":dic [0][5],
+        "rabi": dic[1][5],
+        "summer": dic[2][5],
+    },{
+        "crop": "Cotton",
+        "kharif":dic [0][6],
+        "rabi": dic[1][6],
+        "summer": dic[2][6],
+    }],
+    "valueAxes": [{
+        "unit": "%",
+        "position": "left",
+        "title": "% of area cultivated",
+    }],
+    "startDuration": 1,
+    "graphs": [{
+        "balloonText": "Percentage of Area cultivated of [[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "title": "2004",
+        "type": "column",
+        "columnWidth":0.6,
+        "valueField": "kharif"   //blue
+    }, {
+        "balloonText": "Percentage of Area cultivated of [[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "title": "2005",
+        "type": "column",
+        "clustered":false,
+        "columnWidth":0.2,
+        "valueField": "rabi"   //yellow
+    },{
+        "balloonText": "Percentage of Area cultivated of [[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.8,
+        "lineAlpha": 0.3,
+        "title": "2006",
+        "type": "column",
+        "clustered":false,
+        "columnWidth":0.4,
+        "valueField": "summer"  //green
+    }],
+    "plotAreaFillAlphas": 0.1,
+    "categoryField": "crop",
+    "categoryAxis": {
+        "gridPosition": "start"
+    },
+    "export": {
+    	"enabled": true
+     }
+
+});
+}
+
+</script>
+{% endblock %}
+<!-- HTML -->
+{% block content %}
+
+
+
+<div id="table">
+<table>
+<tr>
+ <th><div id="circle1"></div></th>
+ <th>Kharif</th>
+ <th>&nbsp</th>
+ <th><div id="circle2"></div></th>
+ <th>Rabi</th>
+ <th>&nbsp</th>
+ <th><div id="circle3"></div></th>
+ <th>Summer</th>
+
+ </tr>
+ </table>
+</div>
+
+<!-- <label>Kharif</label>{# <img src="{% static 'images/blue.png' %}" alt="Card image cap">#} &nbsp
+<label>Rabi</label>{# <img src="{% static 'images/yellow.png' %}" alt="Card image cap">#}&nbsp
+<label>Summer</label>{# <img src="{% static 'images/green.png' %}" alt="Card image cap">#}
+ -->
+
+
+<div id="chartdiv"></div>
+
+<form action="" method="post">
+ Search by year:<br>
+ {% csrf_token %}
+    {{ form }}
+    <input type = "submit" value = "Submit" />
+</form>
+
+{% endblock %}
