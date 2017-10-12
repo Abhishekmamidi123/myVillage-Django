@@ -16,13 +16,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from . import views
+from django.conf.urls.static import static
+from rest_framework.urlpatterns import format_suffix_patterns
 
+# main urls of our website
+from django.conf import settings
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^map/', include('map.urls')),
-    url(r'^farmers/', include('farmers.urls')),
-    url(r'^school/', include('school.urls')),
-    url(r'^social/', include('social.urls')),
-    url(r'^$', views.HomePage.as_view(), name="home"),
-    url(r'^main/$', views.Test.as_view(), name="test"),
-]
+    url(r'^admin/', admin.site.urls),  # admin page
+    url(r'^map/', include('map.urls')), # maps app
+    url(r'^farmers/', include('farmers.urls')),  # framers app
+    url(r'^school/', include('school.urls')),  # school app
+    url(r'^social/', include('social.urls')),  # social app
+    url(r'^$', views.HomePage.as_view(), name="home"),  # Home page
+    url(r'^main/$', views.Test.as_view(), name="test"), # tests page
+]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)   # including URL's of static files
+urlpatterns = format_suffix_patterns(urlpatterns, False, allowed=['json', 'html'])
