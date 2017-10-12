@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+## Not required as we are using REST API##
 class house(models.Model):
 	lon=models.FloatField()
 	lat=models.FloatField()
