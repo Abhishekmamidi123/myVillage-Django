@@ -135,9 +135,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
-"/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static"
-'/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static/Source',
-'/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static/ThirdParty/Cesium',
+os.path.join(BASE_DIR, 'static/ThirdParty/Cesium'),
+os.path.join(BASE_DIR, 'static/Source'),
 ]
 
 # Login URL's
