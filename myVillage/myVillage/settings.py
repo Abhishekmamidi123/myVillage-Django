@@ -25,7 +25,7 @@ SECRET_KEY = 's13jm0=&u!=yq)!$r!&e%lt$8ncy&0()$^!uzbt14q!)6ha+i0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -135,8 +135,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
-os.path.join(BASE_DIR, 'static/ThirdParty/Cesium'),
-os.path.join(BASE_DIR, 'static/Source'),
+"/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static"
+'/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static/Source',
+'/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static/ThirdParty/Cesium',
 ]
 
 # Login URL's
