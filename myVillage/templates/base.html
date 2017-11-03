@@ -1,5 +1,6 @@
 <html>
 {% load staticfiles %}
+{% load static %}
   <head>
     <meta charset="utf-8">
     <title>My Village</title>
@@ -25,59 +26,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             Map <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu backColor">
-            <li><a class="dropdown-item" href="{% url 'map:overall' %}">Village View</a></li>
-            <li><a class="dropdown-item" href="{% url 'map:farms' %}">Farms</a></li>
-            <li><a class="dropdown-item" href="{% url 'map:wells' %}">Wells</a></li>
-            <li><a class="dropdown-item" href="{% url 'map:households' %}">Households</a></li>
-          </ul>
+	<li class="nav-item">
+            <a class="nav-link" href="{% url 'map:overall' %}">Village View</a>
         </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Farmer
-          </a>
-          <!--div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"-->
-          <ul class="dropdown-menu backColor">
-            <li><a class="dropdown-item" href="#">Wells</a></li>
-            <li><a class="dropdown-item" href="#">Weather Info</a></li>
-            <li><a class="dropdown-item" href="#">Market Rates</a></li>
-            <li><a class="dropdown-item" href="#">Crops</a></li>
-            <li><a class="dropdown-item" href="#">Households</a></li>
-        </ul>
-        <!--/div-->
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            School
-          </a>
-          <!--div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"-->
-          <ul class="dropdown-menu backColor">
-            <li><a class="dropdown-item" href="#">Education</a></li>
-            <li><a class="dropdown-item" href="#">Notes</a></li>
-        <!--/div-->
-        </ul>
+	<li class="nav-item">
+            <a class="nav-link" href="{% url 'map:farms' %}">Farms</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Support Us</a>
+            <a class="nav-link" href="{% url 'map:wells' %}">Wells</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Post</a>
+            <a class="nav-link" href="{% url 'map:households' %}">Households</a>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-          <li class="nav-item">
-              <a class="nav-link" href="#">Sign Up</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#">Log In</a>
-          </li>
-      </ul>
+
     </div>
 </nav>
     <div class="container mycontent">
