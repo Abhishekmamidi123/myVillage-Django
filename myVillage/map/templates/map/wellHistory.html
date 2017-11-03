@@ -17,7 +17,7 @@
     margin: 0 auto;
 }
 #container {
-    height: 400px;
+    height: 500px;
 }
 </style>
 
@@ -42,10 +42,12 @@
 <!-- Chart code -->
 <script>
 
-var recent = {{recentHistoryList}}
+var recent = {{recentList}}
 var pk={{pk}}
+var cnt={{cnt}}
 console.log(recent);
 console.log(pk);
+console.log(cnt);
 // Set up the chart
 var chart = new Highcharts.Chart({
     chart: {
@@ -60,7 +62,7 @@ var chart = new Highcharts.Chart({
         }
     },
     title: {
-        text: 'Chart rotation demo'
+        text: 'Well History'
     },
     subtitle: {
         text: 'Test options by dragging the sliders below'
@@ -71,7 +73,7 @@ var chart = new Highcharts.Chart({
         }
     },
     series: [{
-        data: [recent[0],recent[1]]
+        data: [recent[0],recent[1],recent[2],recent[3],recent[4],recent[5],recent[6]]
     }]
 });
 
@@ -96,10 +98,12 @@ showValues();
 {% endblock %}
 {% block content %}
 
-
+<p>&nbsp</p>
 <div id="container"></div>
 <div id="sliders">
-    <table>
+
+    <table align="center">
+<p>&nbsp</p>
         <tr>
           <td>Alpha Angle</td>
           <td><input id="alpha" type="range" min="0" max="45" value="15"/> <span id="alpha-value" class="value"></span></td>
