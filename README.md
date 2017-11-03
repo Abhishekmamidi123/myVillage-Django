@@ -6,6 +6,9 @@ It provides data using restapi which is used in myVillage.
 
 ### We have to run myVillage and rest_server projects on seperate ports.
 
+## SDLC Methodology:
+Iterative and Incremental method.
+
 ## Highlights of the project
 1. Responsive
 2. Interactive
