@@ -15,27 +15,27 @@ from django.http import HttpResponse
 # view for house gallery
 def gallery(request, pk):
     ''' This view returns the list of photos of the selected house and the house id '''
-    url="http://10.0.3.23:1118/housePhoto"
+    url="http://10.0.3.23:2729/housePhoto"
     json_obj=urllib2.urlopen(url)
     photolist = json.load(json_obj)
     photolist1=[]
     # filtering photoList of that house
     for obj in photolist:
         if obj['house'] == int(pk):
-            photolist1.append('http://10.0.3.23:1118'+obj['photo'].encode('ascii', 'ignore'))
+            photolist1.append('http://10.0.3.23:2729'+obj['photo'].encode('ascii', 'ignore'))
     return render(request, "map/detail_gallery.html", {'loop_times':range(0, len(photolist1)), 'pk':pk, 'photolist':photolist1 })
 
 # view for house audio
 def audio(request, pk):
     ''' This view returns the list of audio clips of the selected house and the house id '''
-    url="http://10.0.3.23:1118/houseAudio"
+    url="http://10.0.3.23:2729/houseAudio"
     json_obj=urllib2.urlopen(url)
     audiolist = json.load(json_obj)
     audiolist1=[]
     # filtering audioList of that house
     for obj in audiolist:
         if obj['house'] == int(pk):
-            audiolist1.append('http://10.0.3.23:1118'+obj['audio'].encode('ascii', 'ignore'))
+            audiolist1.append('http://10.0.3.23:2729'+obj['audio'].encode('ascii', 'ignore'))
     return render(request, "map/detail_audio.html", {'loop_times':range(0, len(audiolist1)), 'pk':pk, 'audiolist':audiolist1 })
 
 # view for house video
@@ -46,7 +46,7 @@ def video(request, pk):
 # Shows the houses on the map
 def HouseList(request):
     ''' returns the house attributes retrieved from REST API '''
-    url="http://10.0.3.23:1118/house/"
+    url="http://10.0.3.23:2729/house/"
     json_obj=urllib2.urlopen(url)
     houselist=json.load(json_obj)
     # Initialising lists
@@ -69,7 +69,7 @@ def HouseList(request):
 # view for the 3D Visualization of the wells on the map
 def WellsList(request):
     ''' returns the well attributes retrieved from REST API '''
-    url="http://10.0.3.23:1118/wells/"
+    url="http://10.0.3.23:2729/wells/"
     json_obj=urllib2.urlopen(url)
     welllist=json.load(json_obj)
     # Initialising lists
@@ -90,8 +90,8 @@ def WellsList(request):
 # view for showing the houses on the map
 def FarmsList(request):
     ''' returns the well attributes retrieved from REST API '''
-    url1="http://10.0.3.23:1118/farm/"
-    url2="http://10.0.3.23:1118/point/"
+    url1="http://10.0.3.23:2729/farm/"
+    url2="http://10.0.3.23:2729/point/"
     json_obj1=urllib2.urlopen(url1)
     json_obj2=urllib2.urlopen(url2)
     farmlist=json.load(json_obj1)
@@ -108,11 +108,11 @@ def FarmsList(request):
             l.append(i['farm'])
             j=0
     # Retrieving farm json object from the server
-    url1="http://10.0.3.23:1118/farm"
+    url1="http://10.0.3.23:2729/farm"
     json_obj1=urllib2.urlopen(url1)
     farmList=json.load(json_obj1)
     # Retrieving cropping json object from the server
-    url2="http://10.0.3.23:1118/cropping/"
+    url2="http://10.0.3.23:2729/cropping/"
     json_obj2=urllib2.urlopen(url2)
     croppingList=json.load(json_obj2)
     dic={}
@@ -139,7 +139,7 @@ def FarmsList(request):
 
 # Not required
 def farmHistory(request, pk):
-    url="http://10.0.3.23:1118/cropping"
+    url="http://10.0.3.23:2729/cropping"
     json_obj=urllib2.urlopen(url)
     farmHistoryList = json.load(json_obj)
     farmList=[]
@@ -160,7 +160,7 @@ def farmHistory(request, pk):
 # view for Visualization of year wise farm history on the map
 def farmHistoryYear(request, pk):
     ''' returns the year specific farm attributes attributes retrieved from REST API '''
-    url="http://10.0.3.23:1118/cropping"
+    url="http://10.0.3.23:2729/cropping"
     json_obj=urllib2.urlopen(url)
     farmHistoryList = json.load(json_obj)
     farmList=[]
@@ -207,7 +207,7 @@ def farmHistoryYear(request, pk):
 # View for showing overview of farms, wells and houses on the map of the village.
 def OverViewList(request):
     ''' returns attributes of houses, wells and farms '''
-    url="http://10.0.3.23:1118/house/"
+    url="http://10.0.3.23:2729/house/"
     json_obj=urllib2.urlopen(url)
     houselist=json.load(json_obj)
     latlon1=[]
@@ -216,16 +216,17 @@ def OverViewList(request):
     	latlon1.append(i['lon'])
         latlon1.append(int(i['id']))
 
-    url="http://10.0.3.23:1118/wells/"
+    url="http://10.0.3.23:2729/wells/"
     json_obj=urllib2.urlopen(url)
     welllist=json.load(json_obj)
     l2=[]
+    ide=[]
     for i in welllist:
     	l2.append(i['lat'])
     	l2.append(i['lon'])
-
-    url1="http://10.0.3.23:1118/farm/"
-    url2="http://10.0.3.23:1118/point/"
+        ide.append(int(i['id']))
+    url1="http://10.0.3.23:2729/farm/"
+    url2="http://10.0.3.23:2729/point/"
     json_obj1=urllib2.urlopen(url1)
     json_obj2=urllib2.urlopen(url2)
     farmlist=json.load(json_obj1)
@@ -235,16 +236,16 @@ def OverViewList(request):
     	l3.append(i['lat'])
     	l3.append(i['lon'])
 
-    context={'houselist':json.dumps(houselist),'latlon':latlon1, 'welllist':json.dumps(welllist),'latlon2':l2, "farmlist":json.dumps(farmlist),'pointlist':json.dumps(pointlist),'latlon3':l3}
+    context={'houselist':json.dumps(houselist),'latlon':latlon1, 'welllist':json.dumps(welllist),'latlon2':l2, "farmlist":json.dumps(farmlist),'pointlist':json.dumps(pointlist),'latlon3':l3,'index':ide}
     return render(request,'map/map_overview.html',context)
 
 # Not required
 def WellVisualize(request):
-    url1="http://10.0.3.23:1118/wells/"
+    url1="http://10.0.3.23:2729/wells/"
     json_obj1=urllib2.urlopen(url1)
     wellsList=json.load(json_obj1)
 
-    url2="http://10.0.3.23:1118/dateTime/"
+    url2="http://10.0.3.23:2729/dateTime/"
     json_obj2=urllib2.urlopen(url2)
     dateTimeList=json.load(json_obj2)
 
@@ -252,29 +253,26 @@ def WellVisualize(request):
     return render(request,'#',context)
 
 def wellHistory(request, pk):
-    url1="http://10.0.3.23:1118/dateTime"
+    url1="http://10.0.3.23:2729/dateTime"
     json_obj1=urllib2.urlopen(url1)
     wellsList=json.load(json_obj1)
     recentHistoryList=[]
     cnt=0
     # for i in wellsList[::-1]:
     for i in wellsList:
-        if i['well']==pk:
-    		if cnt==7:
-    			break
-    		else:
-    			recentHistoryList.append(i['wateryield'])
-    			cnt+=1
-    context = {'recentHistoryList':recentHistoryList,'pk':pk}
+        if int(i['well'])==int(pk):
+    		recentHistoryList.append(i['wateryield'])
+		cnt=1    	
+    context = {'recentList':recentHistoryList,'pk':pk,'cnt':cnt}
     return render(request,'map/wellHistory.html',context)
 
 # view for Visualization of crop statistics in farms using pie chart
 def FarmVisualize(request):
-    url1="http://10.0.3.23:1118/farm"
+    url1="http://10.0.3.23:2729/farm"
     json_obj1=urllib2.urlopen(url1)
     farmList=json.load(json_obj1)
 
-    url2="http://10.0.3.23:1118/cropping/"
+    url2="http://10.0.3.23:2729/cropping/"
     json_obj2=urllib2.urlopen(url2)
     croppingList=json.load(json_obj2)
 
