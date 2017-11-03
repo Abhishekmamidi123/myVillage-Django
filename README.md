@@ -4,7 +4,7 @@ A project targeting farmers for their better visualization of their farms, wells
 ## rest_server
 It provides data using restapi which is used in myVillage.
 
-### We have to run myVillage and rest_server projects on seperate ports.
+#### Run myVillage and rest_server projects on seperate ports.
 
 ## SDLC Methodology:
 Iterative and Incremental method.
