@@ -17,3 +17,35 @@ html, body {
 	width: 100%;
 
 }
+#circle1 {
+      width: 20px;
+      height: 20px;
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 20px;
+      background: #eea638;
+    }
+#circle2 {
+      width: 20px;
+      height: 20px;
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 20px;
+      background: #de4c4f;
+}
+#circle3 {
+      width: 20px;
+      height: 20px;
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 20px;
+      background: black;
+}
+#circle4 {
+      width: 20px;
+      height: 20px;
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 20px;
+      background: blue;
+}
