@@ -15,13 +15,16 @@
     <script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
 
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="https:////www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+    <script src="https:////www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
     {% block link %}
 
     {% endblock %}
@@ -49,6 +52,16 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url 'map:households' %}">Households</a>
         </li>
+	<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Predict<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu backColor">
+            <li><a class="dropdown-item" href="{% url 'predict:weather' %}">Weather Trends</a></li>
+            <li><a class="dropdown-item" href="{% url 'predict:market' %}">Marketing</a></li>
+          </ul>
+        </li>
+
       </ul>
 
     </div>
