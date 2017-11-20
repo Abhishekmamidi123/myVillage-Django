@@ -92,7 +92,7 @@ var map = AmCharts.makeChart( "chartdiv", {
   "type": "map",
   "projection": "eckert6",
   "titles": [ {
-    "text": "",
+    "text": "Visualisation of location of houses marked by the markers of sizes proprtional to the corresponding family size.",
     "size": 14
   }, {
     "text": "",
@@ -167,12 +167,13 @@ chart.render();
 {% endblock %}
 <br>
 {% block content %}
-<h2>Visualisation of location of houses marked by the markers of sizes proprtional to the corresponding family size.</h2>
-<p><b>Radius</b>&nbsp-indicates the family size of house </p>
-<b><i>Income of the House</i></b>&nbsp&nbsp
+<div id="chartdiv"></div>
+<br>
+<p><b>Radius</b>&nbsp-&nbspindicates the family size of house</p>
 <div id="table">
 <table>
 <tr>
+ <th><b>Income of the House&nbsp-&nbsp</b></th>
  <th><div id="circle1"></div></th>
  <th>less than 100000</th>
  <th>&nbsp</th>
@@ -187,11 +188,10 @@ chart.render();
  <th>&nbsp</th>
  <th><div id="circle4"></div></th>
  <th>greater than 300000</th>
-
  </tr>
  </table>
 </div>
-<div id="chartdiv"></div>
+<br>
 <br>
 
 <div id="chartContainer" style="height: 500px; width: 100%;"></div>

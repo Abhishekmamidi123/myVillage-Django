@@ -105,8 +105,6 @@
 
 	  var p={{latlon2}}
 	  var j=0;
-var index={{index}}
-console.log(index);
       var welllist = JSON.parse('{{ welllist|safe }}');
       var lat1 = 17.767;
       var lon1 = 80.805;
@@ -117,7 +115,7 @@ console.log(index);
           var Lon = welllist[i].lon;
           var Depth = welllist[i].depth ;
           var Wateryield = welllist[i].averageWaterYield ;
-          var v=index[i];
+
           var farmno = welllist[i].farm ;
           var contentString2 = '<div id="content">'+
              '<div id="siteNotice">'+
@@ -129,7 +127,6 @@ console.log(index);
              '<p><h5>Depth: '+Depth.toString()+'</h5></p>' +
              '<p><h5>Avg Wateryield: '+Wateryield.toString()+'</h5></p>' +
              '<p><h5>Farm No: '+farmno.toString()+'</h5></p>' +
-             '<p><h5>Details: <a href="../../map/wellHistory/'+v.toString()+'/" >Details</a></h5></p>' +
              '</div>'+
              '</div>';
              con.push(contentString2);

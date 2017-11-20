@@ -220,11 +220,10 @@ def OverViewList(request):
     json_obj=urllib2.urlopen(url)
     welllist=json.load(json_obj)
     l2=[]
-    ide=[]
     for i in welllist:
     	l2.append(i['lat'])
     	l2.append(i['lon'])
-        ide.append(int(i['id']))
+
     url1="http://10.0.3.23:2729/farm/"
     url2="http://10.0.3.23:2729/point/"
     json_obj1=urllib2.urlopen(url1)
@@ -236,7 +235,7 @@ def OverViewList(request):
     	l3.append(i['lat'])
     	l3.append(i['lon'])
 
-    context={'houselist':json.dumps(houselist),'latlon':latlon1, 'welllist':json.dumps(welllist),'latlon2':l2, "farmlist":json.dumps(farmlist),'pointlist':json.dumps(pointlist),'latlon3':l3,'index':ide}
+    context={'houselist':json.dumps(houselist),'latlon':latlon1, 'welllist':json.dumps(welllist),'latlon2':l2, "farmlist":json.dumps(farmlist),'pointlist':json.dumps(pointlist),'latlon3':l3}
     return render(request,'map/map_overview.html',context)
 
 # Not required
@@ -260,10 +259,13 @@ def wellHistory(request, pk):
     cnt=0
     # for i in wellsList[::-1]:
     for i in wellsList:
-        if int(i['well'])==int(pk):
-    		recentHistoryList.append(i['wateryield'])
-		cnt=1    	
-    context = {'recentList':recentHistoryList,'pk':pk,'cnt':cnt}
+        if i['well']==pk:
+    		if cnt==7:
+    			break
+    		else:
+    			recentHistoryList.append(i['wateryield'])
+    			cnt+=1
+    context = {'recentHistoryList':recentHistoryList,'pk':pk}
     return render(request,'map/wellHistory.html',context)
 
 # view for Visualization of crop statistics in farms using pie chart

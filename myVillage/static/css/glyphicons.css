@@ -17,3 +17,8 @@ body {
 .colour{
     background-color:#b6c9d8 ;
 }
+
+#chartdiv {
+	width	: 100%;
+	height	: 500px;
+}
