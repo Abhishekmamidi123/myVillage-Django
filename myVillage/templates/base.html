@@ -11,10 +11,21 @@
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <!--link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"-->
-    <link rel="stylesheet" href="{% static 'css/glyphicons.css'%}">
+    <script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+    <script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
     {% block link %}
 
     {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/glyphicons.css'%}">
     {# https://www.eduonix.com/blog/web-programming-tutorials/learn-icon-fonts-bootstrap-4/#}
   </head>
   <body style="background-image: url('{% static "/images/background.png" %}')";>
@@ -42,6 +53,7 @@
 
     </div>
 </nav>
+<br>
     <div class="container mycontent">
           {% block content %}
           {% endblock %}
