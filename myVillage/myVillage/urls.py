@@ -24,6 +24,7 @@ from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),  # admin page
     url(r'^map/', include('map.urls')), # maps app
+    url(r'^predict/', include('predict.urls')), # predict app
     url(r'^farmers/', include('farmers.urls')),  # framers app
     url(r'^school/', include('school.urls')),  # school app
     url(r'^social/', include('social.urls')),  # social app
