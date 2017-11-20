@@ -20,7 +20,7 @@ Bootstrap and Java-script
 Django Framework, Django REST, Python, PostgreSQL database
 
 ## Salient features:
-Data Analytics, 2D and 3D Visualization of Data.
+Data Analytics, 2D and 3D Visualization of Data, Weather Prediction using HoltWinter
 
 ## How to run this project?
 1. Download the zip file from the link and extract.
