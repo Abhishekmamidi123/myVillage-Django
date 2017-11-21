@@ -19,6 +19,7 @@ from myVillage.views import HomePage
 from django.conf.urls.static import static
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.contrib.auth import views
+from blog.views import signUp
 
 # main urls of our website
 from django.conf import settings
@@ -31,6 +32,7 @@ urlpatterns = [
     url(r'^soc/', include('social.urls')),  # social app
     url(r'^$', HomePage.as_view(), name="home"),  # Home page
     url(r'social/', include('blog.urls')),
+    url(r'^accounts/signup/$', signUp, name='signup'),
     url(r'^accounts/login/$', views.login, name='login'),
     url(r'^accounts/logout/$', views.logout, name='logout', kwargs={'next_page': '/'}),]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)   # including URL's of static files
 urlpatterns = format_suffix_patterns(urlpatterns, False, allowed=['json', 'html'])

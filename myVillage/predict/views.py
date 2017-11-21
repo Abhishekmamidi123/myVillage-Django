@@ -48,5 +48,9 @@ def weather(request):
     return render(request, "predict/weather.html", {'data':json.dumps(data)})
 
 def market(request):
-	return HttpResponse("hello")
+    url="http://10.0.3.23:2729/market"
+    json_obj=urllib2.urlopen(url)
+    weatherlist = json.load(json_obj)
+    # onion, tomato, chilli, cotton
+    return render(request, "predict/market.html", {{'data':json.dumps(data)}})
 

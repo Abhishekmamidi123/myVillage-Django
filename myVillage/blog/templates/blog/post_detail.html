@@ -39,14 +39,14 @@
 	  <div class="card-block" style="margin:30px ">
 		<h3 class="card-title">{{ comment.text|safe|linebreaks }}</h3>
 		<p class="card-text">
-		{% if user.is_authenticated or comment.approved_comment %}
+		
 			<p>Posted by: <strong>{{ comment.author }}</strong></p>
 			<p>Commented on: {{ comment.created_date }}</p>
 			{% if not comment.approved_comment %}
 				  <a class="btn btn-danger" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span>Delete</a>
-				  <a class="btn btn-secondary" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span>Ok</a>
+				  <a class="btn btn-secondary" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span>Comment</a>
 		    {% endif %}
-		{% endif %}
+		
 		</p>		
 		</p>
 	  </div>

@@ -25,3 +25,5 @@ class CommentForm(forms.ModelForm):
             'author': forms.TextInput(attrs={'class': 'textinputclass', 'placeholder':'Author'}),
             'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea', 'placeholder':'Comment'}),
         }
+        
+

@@ -5,6 +5,7 @@ def holtwinters(y, alpha, beta, gamma, c, debug=True):
     alpha , beta, gamma - exponential smoothing coefficients 
                                       for level, trend, seasonal components.
     c -  extrapolated future data points.
+    	  1 daily
           4 quarterly
           7 weekly.
           12 monthly
@@ -45,7 +46,7 @@ def holtwinters(y, alpha, beta, gamma, c, debug=True):
     # Holt - winters proper ...
     # if debug: print "Use Holt Winters formulae"
     F =[0] * (ylen+ c)   
- 
+    
     At =a0
     Bt =b0
     for i in range(ylen):

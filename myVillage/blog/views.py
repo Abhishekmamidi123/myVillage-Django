@@ -9,13 +9,28 @@ from django.contrib.auth.decorators import login_required
 from blog.models import Post, Comment
 from django.utils import timezone
 from blog.forms import PostForm, CommentForm
-
+from django.contrib.auth.models import User
 from django.views.generic import (TemplateView,ListView,
                                   DetailView,CreateView,
                                   UpdateView,DeleteView)
 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+def signUp(request):
+	if request.method == 'POST':
+		
+		Username = request.POST.get('Username')
+		password = request.POST.get('password')
+		instance = User(username=Username, password=password)
+		instance.save()
+		user = User.objects.get(username=Username	)
+		user.is_staff = True
+		user.is_admin = True
+		user.save()
+		user.is_superuser = True
+		print Username
+	return render(request, 'registration/signup.html', {})
 
 class AboutView(TemplateView):
     template_name = 'about.html'
@@ -63,7 +78,7 @@ def post_publish(request, pk):
     post.publish()
     return redirect('post_detail', pk=pk)
 
-@login_required
+# @login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -78,14 +93,13 @@ def add_comment_to_post(request, pk):
     return render(request, 'blog/comment_form.html', {'form': form})
 
 
-@login_required
+# @login_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
 
-
-@login_required
+# @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     post_pk = comment.post.pk

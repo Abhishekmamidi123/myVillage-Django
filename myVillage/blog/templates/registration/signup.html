@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <div class="jumbotron align-center">
+    <h2>SignUp here </h2>
+    <br>
+    <form method="POST" action="{% url 'login' %}">
+    	{% csrf_token %}
+        <label>Username&nbsp&nbsp<input type="text" name="Username" placeholder="Pick up a Username"/></label><br>
+        <label>Password&nbsp&nbsp&nbsp<input type="password" name="password" placeholder="Create a password"/></label><br >
+        <input type="submit" class="btn btn-primary" value="Login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </div>
+{% endblock %}
