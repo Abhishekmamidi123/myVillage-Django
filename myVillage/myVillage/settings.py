@@ -37,19 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
     'map',
     'predict',
     'farmers',
     'school',
     'social',
+    'blog',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -135,14 +135,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
-"/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static"
-'/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static/Source',
-'/home/vagdevi/Downloads/myVillage-Django-master/myVillage/static/ThirdParty/Cesium',
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 # Login URL's
-LOGIN_REDIRECT_URL = 'test'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'thanks'
 
 # media URL's

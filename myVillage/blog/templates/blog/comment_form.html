@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br>
+<div class="card">
+  <h3 class="card-header">New comment</h3>
+  <div class="card-block" style="margin-left:50px">
+  <br>
+  <form method="POST" class="post-form">
+    {% csrf_token %}
+    {% for i in form %}
+    	{{i}}
+    <br>
+    <br>
+    {% endfor %}
+    <button type="submit" class="save btn btn-primary">Post Comment</button>
+  </form>
+  </div>
+</div>
+<script>var editor = new MediumEditor('.editable');</script>
+{% endblock %}

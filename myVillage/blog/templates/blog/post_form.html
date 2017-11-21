@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<br>
+<div class="card">
+  <h3 class="card-header">Write what's in your mind....</h3>
+  
+  <div class="card-block" style="margin-left:50px">
+  <br>
+  <form method="POST" class="post-form">
+    {% csrf_token %}
+    {% for i in form %}
+    	{{i}}
+    	<br>
+    	<br>
+    {% endfor %}
+    <button type="submit" class="save btn btn-primary">Save</button>
+  </form>
+  </div>
+</div>
+{% endif %}
+<br>
+<script>var editor = new MediumEditor('.editable');</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="centerstage">
+{% for post in post_list %}
+	<br>
+	<div class="card w-50">
+	  <div class="card-block" style="margin:30px ">
+	    <h3 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+	    <hr>
+	    <p class="card-text"><h4>{{ post.text|safe|linebreaksbr }}</h4></p>
+	    <div class="date">
+                <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+            </div>
+	    <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-primary">Comments: {{ post.approve_comments.count }}</a>
+	  </div>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}

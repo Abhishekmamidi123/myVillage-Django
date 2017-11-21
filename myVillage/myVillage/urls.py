@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from . import views
+from myVillage.views import HomePage
 from django.conf.urls.static import static
 from rest_framework.urlpatterns import format_suffix_patterns
+from django.contrib.auth import views
 
 # main urls of our website
 from django.conf import settings
@@ -27,8 +28,9 @@ urlpatterns = [
     url(r'^predict/', include('predict.urls')), # predict app
     url(r'^farmers/', include('farmers.urls')),  # framers app
     url(r'^school/', include('school.urls')),  # school app
-    url(r'^social/', include('social.urls')),  # social app
-    url(r'^$', views.HomePage.as_view(), name="home"),  # Home page
-    url(r'^main/$', views.Test.as_view(), name="test"), # tests page
-]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)   # including URL's of static files
+    url(r'^soc/', include('social.urls')),  # social app
+    url(r'^$', HomePage.as_view(), name="home"),  # Home page
+    url(r'social/', include('blog.urls')),
+    url(r'^accounts/login/$', views.login, name='login'),
+    url(r'^accounts/logout/$', views.logout, name='logout', kwargs={'next_page': '/'}),]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)   # including URL's of static files
 urlpatterns = format_suffix_patterns(urlpatterns, False, allowed=['json', 'html'])
