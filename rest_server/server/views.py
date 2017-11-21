@@ -116,3 +116,11 @@ class graphColorsList(APIView):
                 objects = models.graphColors.objects.all()
                 serializer = serializers.graphColorsSerializer(objects, many=True)
                 return Response(serializer.data)
+
+class weatherList(APIView):
+        def get(self, request, format=None):
+                objects = models.weather.objects.all()
+                serializer = serializers.weatherSerializer(objects, many=True)
+                return Response(serializer.data)
+
+

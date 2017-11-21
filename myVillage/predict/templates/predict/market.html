@@ -2,6 +2,96 @@
 {% load staticfiles %}
 {% load static %}
 
+
+{% block script %}
+<script>
+var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "theme": "light",
+    "legend": {
+        "useGraphSettings": true
+    },
+    "dataProvider": [{
+        "year":'Jan',
+        "onion": 1,
+        "chilly": 5,
+        "tomato": 3,
+        "cotton":24
+    }, 
+    {
+        "year": 'Feb',
+        "onion": 10,
+        "chilly": 3,
+        "tomato": 13,
+        "cotton":4
+    }, 
+    {
+        "year": 'Mar',
+        "onion": 7,
+        "chilly": 7,
+        "tomato":23,
+        "cotton":17
+    },
+    ],
+    "valueAxes": [{
+        "integersOnly": true,
+        "maximum": 30,
+        "minimum": 1,
+        "reversed": true,
+        "axisAlpha": 0,
+        "dashLength": 5,
+        "gridCount": 10,
+        "position": "left",
+        "title": "Market Price(in Rupees)"
+    }],
+    "startDuration": 0.5,
+    "graphs": [{
+        "balloonText": "Price of Onion in [[category]]: [[value]]",
+        "bullet": "round",
+       
+        "title": "Onion",
+        "valueField": "onion",
+		"fillAlphas": 0
+    }, {
+        "balloonText": "Price of Chilly in [[category]]: [[value]]",
+        "bullet": "round",
+        "title": "Chilly",
+        "valueField": "chilly",
+		"fillAlphas": 0
+    }, 
+    {
+        "balloonText": "Price of Tomato in [[category]]: [[value]]",
+        "bullet": "round",
+        "title": "Tomato",
+        "valueField": "tomato",
+		"fillAlphas": 0
+    }, {
+        "balloonText": "Price of Cotton in [[category]]: [[value]]",
+        "bullet": "round",
+        "title": "Cotton",
+        "valueField": "cotton",
+		"fillAlphas": 0
+    }],
+    "chartCursor": {
+        "cursorAlpha": 0,
+        "zoomable": false
+    },
+    "categoryField": "year",
+    "categoryAxis": {
+        "gridPosition": "start",
+        "axisAlpha": 0,
+        "fillAlpha": 0.05,
+        "fillColor": "#000000",
+        "gridAlpha": 0,
+        "position": "top"
+    },
+    "export": {
+    	"enabled": true,
+        "position": "bottom-right"
+     }
+});
+​</script>
+{% endblock %}
 {% block content %}
-{{demo}}
+<div id="chartdiv"></div>
 {% endblock %}

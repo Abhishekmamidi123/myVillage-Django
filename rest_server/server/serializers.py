@@ -81,3 +81,8 @@ class graphColorsSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = models.graphColors
 		fields = '__all__'
+class weatherSerializer(serializers.ModelSerializer):
+        class Meta:
+                model = models.weather
+                fields = '__all__'
+

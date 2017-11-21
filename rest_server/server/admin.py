@@ -20,3 +20,5 @@ admin.site.register(models.dateTime)
 admin.site.register(models.wellPhoto)
 admin.site.register(models.wellAudio)
 admin.site.register(models.graphColors)
+admin.site.register(models.weather)
+

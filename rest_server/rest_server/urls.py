@@ -39,6 +39,8 @@ urlpatterns = [
     url(r'^wellPhoto/', views.wellPhotoList.as_view()),
     url(r'^wellAudio/', views.wellAudioList.as_view()), 
     url(r'graphColors/', views.graphColorsList.as_view()),   
+    url(r'weather/', views.weatherList.as_view()),
+    
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns, False, allowed=['json', 'html'])

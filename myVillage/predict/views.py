@@ -16,7 +16,7 @@ import os
 
 
 def weather(request):
-    url="http://10.0.3.23:2729/weather"
+    url="http://10.0.3.23:2728/weather"
     json_obj=urllib2.urlopen(url)
     weatherlist = json.load(json_obj)
     dates = []
@@ -48,9 +48,17 @@ def weather(request):
     return render(request, "predict/weather.html", {'data':json.dumps(data)})
 
 def market(request):
-    url="http://10.0.3.23:2729/market"
-    json_obj=urllib2.urlopen(url)
-    weatherlist = json.load(json_obj)
+    # url="http://10.0.3.23:2728/market"
+    # json_obj=urllib2.urlopen(url)
+    # marketlist = json.load(json_obj)
+    # data = []
+    # for obj in marketlist:
+    #	temp = {}
+    #	temp['year'] = obj['year']
+    #	temp['onion'] = obj['onion']
+    #	temp['chilli'] = obj['chilli']
+    #	temp['tomato'] = obj['tomato']
+    #	temp['cotton'] = obj['cotton']
     # onion, tomato, chilli, cotton
-    return render(request, "predict/market.html", {{'data':json.dumps(data)}})
+    return render(request, "predict/market.html", {'data':'hello'})
 

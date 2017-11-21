@@ -63,7 +63,7 @@ class cropping(models.Model):
 	season=models.ForeignKey(season,on_delete=models.CASCADE)
 	year=models.CharField(max_length=350)
 	area=models.FloatField()
-#	Unique has to be done
+#	Unique has to be doneaaaaaaa
 	def __str__(self):
 		return str(self.year)
 
@@ -106,5 +106,14 @@ class wellAudio(models.Model):
 	well=models.ForeignKey(well,on_delete=models.CASCADE)
 	def __str__(self):
 		return str(self.well)
+
 class graphColors(models.Model):
 	photo=models.ImageField('image')
+
+class weather(models.Model):
+	date=models.CharField(max_length=50)
+	temperature=models.FloatField()
+	def __str__(self):
+		return self.date+" "+str(self.temperature)
+
+
