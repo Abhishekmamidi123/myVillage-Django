@@ -27,3 +27,6 @@ Data Analytics, 2D and 3D Visualization of Data, Weather Prediction using HoltWi
 2. Go to the myVillage/static folder and unzip the ThirdParty zip file
 3. Navigate to myVillage folder and run the following command in the terminal: python manage.py runserver
 
+## Project:
+### A social platform for the villagers is implemented, so that they can post their problems, updates and anyone in the world can see it and respond.
+### 3D visulaization of wells, Data Visualization, Data Analytics.
